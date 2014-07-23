@@ -157,14 +157,17 @@ namespace JCore.SitecoreModules.ImageCropping.Resources.Media
         public static int[] ConvertToIntArray(string cropRegion)
         {
             try
-            {
-                return cropRegion.Split(',').Select(c => int.Parse(c)).ToArray();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.Message, ex, typeof(CustomMediaManager));
-            }
-            return new int[4];
+			{
+				if (cropRegion.Contains(","))
+					return cropRegion.Split(',').Select(c => int.Parse(c)).ToArray();
+				else
+					return new int[4];
+			}
+			catch
+			{
+				//Log.Error(ex.Message, ex, typeof(CustomMediaManager));
+			}
+			return new int[4];
         }
     
     }
